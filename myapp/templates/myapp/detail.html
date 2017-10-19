@@ -6,13 +6,10 @@
 </p>{% endif %}
 
 <form action="{% url 'myapp:vote' question.id %}" method="POST">
-    {% csrf_token %} 
-    {% for choice in question.choice_set.all %}
+    {% csrf_token %} {% for choice in question.choice_set.all %}
     <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
-    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
-{% endfor %}
-<br />
-{{question.was_published_recently}}
-
-<input type="submit" value="Vote" />
+    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+    <br /> {% endfor %}
+    <br />
+    <input type="submit" value="Vote" />
 </form>

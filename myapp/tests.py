@@ -115,21 +115,25 @@ class QuestionIndexViewTests(TestCase):
             response.context['latest_question_list'],
             ['<Question: Past question 2.>', '<Question: Past question 1.>']
         )
+
+
 class QuestionDetailViewTests(TestCase):
     def test_future_question(self):
         """
         The detail of a question with a pub date in the future return a 404.
         """
-        future_question=create_question(question_text='Future question',days=5)
-        url=reverse('myapp:detail',args=(future_question.id,))
-        response=self.client.get(url)
+        future_question = create_question(
+            question_text='Future question', days=5)
+        url = reverse('myapp:detail', args=(future_question.id,))
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
+
     def test_past_questions(self):
         """
         The detail view of a question with a pub date in the past displays the 
         questions text.
         """
-        past_question=create_question(question_text='Past question',days=-5)
-        url=reverse('myapp:detail',args=(past_question.id,))
-        response=self.client.get(url)
-        self.assertContains(response, past_question.)
+        past_question = create_question(question_text='Past question', days=-5)
+        url = reverse('myapp:detail', args=(past_question.id,))
+        response = self.client.get(url)
+        self.assertContains(response, past_question.question_text)
